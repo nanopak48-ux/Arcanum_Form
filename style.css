@@ -1,0 +1,389 @@
+:root {
+  --bg: #1b1530;
+  --card: #2a2145;
+  --text: #f1ecff;
+  --muted: #b3a8d6;
+  --accent: #b388ff;
+  --accent-2: #ffd36e;
+  --error: #ff7a8a;
+  --ok: #7be0a5;
+  --border: #433866;
+}
+
+* { box-sizing: border-box; }
+
+/* 1. กำหนดฟอนต์หลักของหน้าเว็บเป็น Krub */
+body {
+  margin: 0;
+  padding: 24px 16px 48px;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.25) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 15% 70%, rgba(255, 209, 102, 0.1) 0%, transparent 45%),
+    var(--bg);
+  color: var(--text);
+  font-family: 'Krub', system-ui, -apple-system, sans-serif; /* <--- ฟอนต์ Krub */
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* 2. กำหนดฟอนต์หัวข้อหลักและหัวข้อหมวดหมู่ */
+h1, .section-title, legend {
+  font-family: 'Cinzel', 'Krub', serif, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+h1 {
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--text), var(--accent-2));
+  -webkit-background-clip: text; /* สำหรับเบราว์เซอร์ตระกูล WebKit */
+  background-clip: text;         /* พร็อพเพอร์ตี้มาตรฐาน (เพิ่มบรรทัดนี้) */
+  -webkit-text-fill-color: transparent;
+}
+
+.card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+}
+
+header { text-align: center; margin-bottom: 16px; }
+h1 { margin: 0; font-size: 1.9rem; }
+.subtitle { color: var(--muted); margin: 6px 0 0; }
+
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 0 0 18px;
+  padding: 14px 16px 16px;
+}
+legend { padding: 0 8px; font-weight: 600; color: var(--accent); }
+.opt { color: var(--muted); font-weight: 400; font-size: .85em; }
+.req { color: var(--error); }
+
+label { display: block; margin-top: 12px; font-size: .95rem; }
+label small { color: var(--muted); }
+
+input[type="text"], input[type="email"], select, textarea {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  background: #1f1838;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+textarea { resize: vertical; }
+
+.rating-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  flex-wrap: wrap;
+}
+.stars { display: flex; gap: 4px; }
+.star {
+  background: none;
+  border: none;
+  padding: 2px;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: #5b4f82;
+  cursor: pointer;
+  transition: transform .1s, color .1s;
+}
+.star:hover { transform: scale(1.15); }
+.star.on { color: var(--accent-2); }
+.star:focus-visible { outline: 2px solid var(--accent); border-radius: 6px; }
+.rating-row.invalid > span { color: var(--error); }
+
+.choices { display: flex; gap: 20px; flex-wrap: wrap; }
+.choices label { margin: 0; display: flex; align-items: center; gap: 6px; }
+
+button[type="submit"] {
+  width: 100%;
+  padding: 13px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1b1530;
+  background: linear-gradient(90deg, var(--accent), #8ec5ff);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button[type="submit"]:disabled { opacity: .6; cursor: wait; }
+
+#status { min-height: 1.4em; margin: 0 0 12px; text-align: center; }
+#status.error { color: var(--error); }
+#status.ok { color: var(--ok); }
+
+/* Honeypot hidden off-screen (not display:none, so bots still fill it) */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+@media (max-width: 480px) {
+  .card { padding: 20px 14px; }
+}
+
+/* ============================================================
+   ปรับแต่งกรอบ Section และหัวข้อให้อยู่บนเส้นขอบ (Fieldset Style)
+   ============================================================ */
+
+.question-section {
+  position: relative;                   /* สำหรับอ้างอิงตำแหน่งของหัวข้อ */
+  background: rgba(18, 11, 34, 0.7);    /* พื้นหลังภายในกรอบ */
+  border: 1.5px solid var(--border);     /* เส้นขอบกรอบสี่เหลี่ยม */
+  border-radius: 14px;                   /* ขอบโค้งมน */
+  padding: 24px 18px 12px;               /* เว้นระยะด้านบนภายในกรอบไม่ให้เนื้อหาทับหัวข้อ */
+  margin-top: 24px;                      /* เว้นระยะด้านบนกรอบ */
+  margin-bottom: 28px;                   /* เว้นระยะด้านล่างระหว่างกรอบ */
+}
+
+.section-title {
+  position: absolute;
+  top: -13px;
+  left: 16px;
+  background: var(--card);
+  padding: 0 10px;
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--accent-2);
+  border-bottom: none;      /* ลบเส้นขอบล่างเดิมออก */
+  text-decoration: none;    /* ลบเส้นใต้ข้อความออก */
+  line-height: 1;
+}
+
+.section-desc {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 4px 0 16px 0;
+}
+
+/* ============================================================
+   ธีมสีใหม่: SOS: ARCANUM / Little Witch Magic Theme
+   ============================================================ */
+
+:root {
+  /* พื้นหลังและโทนหลัก */
+  --bg: #0c0818;                  /* สีพื้นหลังราตรีเวทมนตร์เข้มลึก */
+  --card: #18112c;                /* สีการ์ดหลักโทนม่วงเข้ม */
+  --card-inner: #120b22;          /* สีพื้นหลังกล่องกรอกข้อมูล */
+  --text: #f4efff;                /* ข้อความหลักสีขาวอมม่วงสว่าง */
+  --muted: #9f8ebf;               /* ข้อความรองสีม่วงหม่น */
+  
+  /* สีออร่าเวทมนตร์และไอคอน */
+  --accent: #a855f7;              /* สีม่วงเวทมนตร์นีออน (Arcane Violet) */
+  --accent-2: #ffd166;            /* สีทองอัมพันเวทมนตร์ (Golden Glow) */
+  --mana: #06b6d4;                /* สีฟ้ามานาคริสตัล (Cyan Mana) */
+  
+  /* สถานะและเส้นขอบ */
+  --error: #ff5252;               /* สีแจ้งเตือน/ข้อผิดพลาด */
+  --ok: #4ade80;                  /* สีแจ้งส่งสำเร็จ */
+  --border: #382759;              /* เส้นขอบโทนม่วงเข้ม */
+}
+
+/* ปรับแต่ง Background ของหน้าเว็บให้มีประกายออร่าเวทมนตร์ */
+body {
+  margin: 0;
+  padding: 24px 16px 48px;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.25) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 15% 70%, rgba(255, 209, 102, 0.1) 0%, transparent 45%),
+    var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* การ์ดหลัก */
+.card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  padding: 28px 24px;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+/* กรอบครอบแต่ละ Section หมวดหมู่ */
+.question-section {
+  background: rgba(18, 11, 34, 0.7);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 18px 10px;
+  margin-bottom: 24px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* หัวข้อหมวดหมู่ */
+.section-title {
+  font-size: 1.25rem;
+  color: var(--accent-2);
+  margin: 0 0 4px 0;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  text-shadow: 0 0 8px rgba(255, 209, 102, 0.3);
+}
+
+/* ปรับแต่งช่อง Input / Select / Textarea ให้เข้าธีม */
+input[type="text"], input[type="email"], select, textarea {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  background: var(--card-inner);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+/* ปรับแต่งดาวให้สว่างไสวแบบเวทมนตร์ */
+.star {
+  background: none;
+  border: none;
+  padding: 2px;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: #4a3b6e;
+  cursor: pointer;
+  transition: transform 0.15s, color 0.15s;
+}
+.star:hover { 
+  transform: scale(1.25) rotate(5deg); 
+  color: var(--accent-2);
+}
+.star.on { 
+  color: var(--accent-2); 
+  text-shadow: 0 0 10px rgba(255, 209, 102, 0.8);
+}
+
+/* ปุ่มส่งแบบไล่เฉดสีเวทมนตร์ม่วง-ฟ้า */
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0c0818;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent), var(--mana));
+  background-size: 200% 200%;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
+}
+
+/* ============================================================
+   ปรับแต่งสไตล์ปุ่มกดส่ง (Submit Button)
+   ============================================================ */
+button[type="submit"] {
+  width: 100%;
+  padding: 17px 40px;
+  border-radius: 50px;
+  cursor: pointer;
+  border: 0;
+  background-color: #ffffff;
+  color: #1b1530; /* กำหนดสีตัวอักษรตอนพื้นหลังเป็นสีขาวเพื่อให้เห็นชัดเจน */
+  box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-family: 'Krub', sans-serif;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  letter-spacing: 3px;
+  background-color: hsl(261deg 80% 48%);
+  color: hsl(0, 0%, 100%);
+  box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+}
+
+button[type="submit"]:active:not(:disabled) {
+  letter-spacing: 3px;
+  background-color: hsl(261deg 80% 48%);
+  color: hsl(0, 0%, 100%);
+  box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+  transform: translateY(10px);
+  transition: 100ms;
+}
+
+/* รักษาสภาพตอนกำลังส่งข้อมูล */
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* ============================================================
+   Progress Bar แสดงความคืบหน้าคำถามบังคับ (Required Progress)
+   ============================================================ */
+.progress-wrapper {
+  margin-bottom: 24px;
+  background: rgba(18, 11, 34, 0.7);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+#progress-text {
+  color: var(--accent-2);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.progress-track {
+  width: 100%;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--mana));
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
+  transition: width 0.3s ease;
+}
