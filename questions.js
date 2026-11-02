@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/XXXXXXXX/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgUESprcw9yLtFET2vT1Lsyl8X_ARTDGqfFV6bA8bwpypGf36m5mbVrE9693bczGC3xQ/exec";
 
 // จัดโครงสร้างเป็นหมวดหมู่ (Sections)
 const formSections = [
