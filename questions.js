@@ -4,9 +4,9 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgUESprcw9yLtFET2vT
 const formSections = [
   {
     sectionTitle: "PLAYER DATA",
-    sectionDesc: "ข้อมูลพื้นฐานสำหรับการประมวลผล (เลือกตอบได้ตามสะดวก)",
+    sectionDesc: "ข้อมูลพื้นฐานของผู้เล่นทดสอบ",
     questions: [
-      { id: "PLAYER NAME", type: "text", label: "ชื่อ / นามแฝง", placeholder: "กรอกชื่อของคุณ", required: true },
+      { id: "PLAYER NAME", type: "text", label: "ชื่อ-นามสกุล / ชื่อเล่น", placeholder: "กรอกชื่อของคุณ", required: true },
       { id: "PLAYTIME", type: "select", label: "ระยะเวลาที่เล่น", options: ["ต่ำกว่า 10 นาที", "10–15 นาที", "มากกว่า 15 นาที"], required: true },
       { id: "AGE", type: "select", label: "อายุ", options: ["ต่ำกว่า 18 ปี", "18–25 ปี", "26–35 ปี", "36–45 ปี", "46 ปีขึ้นไป"], required: true },
       { id: "FAVORITE GENRE", type: "select", label: "แนวเกมที่ชอบ", options: ["แอ็กชัน", "ผจญภัย", "ปริศนา", "จำลองสถานการณ์", "กีฬา", "อื่น ๆ"], required: true },
@@ -14,8 +14,8 @@ const formSections = [
       { id: "action_experience", type: "radio", label: "คุณเล่นเกมแอ็กชันแนว Hack & Slash (เช่น Genshin, ZZZ, Hollow Knight) บ่อยแค่ไหน?", options: ["แทบไม่เคยเล่น", "เล่นบ้างเป็นครั้งคราว", "เล่นเป็นประจำ"], required: true },
       { id: "control_device", type: "radio", label: "คุณเล่นด้วยอะไร?", options: ["คีย์บอร์ด + เมาส์", "Laptop Touchpad", "อื่น ๆ"], required: true },
       // บอกว่าผู้เล่นไปถึงไหน คำตอบส่วนอื่นจะได้ตีความถูก
-      { id: "progress_reached", type: "select", label: "คุณเล่นไปถึงจุดไหน?", options: ["ยังไม่ผ่านศัตรูตัวแรก", "ผ่านศัตรูบางตัว", "ไปถึงบอส", "บอสเข้าเฟส 2 / 3", "ชนะบอส"], required: true },
-      { id: "stars_earned", type: "select", label: "ถ้าชนะบอส ได้กี่ดาว?", options: ["ไม่ได้ชนะ", "1 ดาว", "2 ดาว", "3 ดาว"], required: false }
+      { id: "progress_reached", type: "select", label: "คุณเล่นไปถึงจุดไหน?", options: ["ยังไม่ผ่านศัตรูตัวแรก", "ผ่านศัตรูบางตัว", "ไปถึงบอส", "บอสเข้าเฟส 2", "ชนะบอส"], required: true },
+      { id: "stars_earned", type: "select", label: "ถ้าชนะบอส ได้กี่ดาว?", options: [ "1 ดาว", "2 ดาว", "3 ดาว"], required: false }
     ]
   },
   {
@@ -23,23 +23,23 @@ const formSections = [
     sectionDesc: "คำถามเกี่ยวกับระบบการเล่น ความสนุก และความยากง่าย",
     questions: [
       { id: "gameplay_rating", type: "star", label: "ความสนุกโดยรวมของ Gameplay", required: true },
-      { id: "difficulty_rating", type: "star", label: "ระดับความยาก (1 = ง่ายไป, 5 = ยากไป)", required: true },
-      { id: "recommend", type: "radio", label: "คุณจะแนะนำเกมนี้ให้เพื่อนหรือไม่?", options: ["แน่นอน", "อาจจะ", "ไม่ล่ะ"], required: true },
+      { id: "difficulty_rating", type: "star", label: "ระดับความยาก (1 = ง่ายที่สุด, 5 = ยากเกินไป)", required: true },
+      { id: "recommend", type: "radio", label: "คุณจะแนะนำเกมนี้ให้เพื่อนหรือไม่?", options: ["แนะนำ", "อาจจะแนะนำ", "ไม่แนะนำ"], required: true },
       { id: "gameplay_bugs", type: "textarea", label: "เจอบัคหรือปัญหาเกี่ยวกับ Gameplay บ้างไหม?", placeholder: "อธิบายสิ่งที่เกิดขึ้น...", required: false },
       // ชี้ว่าต้องปรับจุดไหนก่อน (บาลานซ์ / บทช่วยสอน)
-      { id: "hardest_part", type: "select", label: "ส่วนไหนยากที่สุด?", options: ["ศัตรูทั่วไป (Grunt)", "ศัตรูยิงเวท (Caster)", "ศัตรูถือโล่ (Brute)", "บอส เฟส 1", "บอส เฟส 2 (ลูกน้อง)", "บอส เฟส 3 (Cataclysm)", "การกระโดด / แพลตฟอร์ม", "ไม่มีส่วนไหนยากเกินไป"], required: false },
-      { id: "pacing", type: "radio", label: "ความยาวของด่านเป็นอย่างไร?", options: ["สั้นไป อยากเล่นต่อ", "พอดี", "ยาวไป เริ่มเบื่อ"], required: true },
+      { id: "hardest_part", type: "select", label: "ส่วนไหนยากที่สุด?", options: ["ศัตรูทั่วไป", "ศัตรูยิงเวท", "ศัตรูถือโล่", "บอส เฟส 1", "บอส เฟส 2", "บอส เฟส 3", "การกระโดด / แพลตฟอร์ม", "ไม่มีส่วนไหนยากเกินไป"], required: false },
+      { id: "pacing", type: "radio", label: "ความยาวของด่านเป็นอย่างไร", options: ["สั้นไป อยากเล่นต่อ", "พอดี", "ยาวไป เริ่มเบื่อ"], required: true },
       { id: "replay_interest", type: "radio", label: "คุณอยากเล่นด่านนี้ซ้ำเพื่อเก็บ 3 ดาวไหม?", options: ["อยาก", "เฉย ๆ", "ไม่อยาก"], required: false }
     ]
   },
   {
     sectionTitle: "SECTION COMBAT & CONTROLS",
-    sectionDesc: "ระบบต่อสู้และการควบคุม (ใช้ตัดสินใจว่าจะพัฒนาหรือปรับระบบไหนต่อ)",
+    sectionDesc: "ระบบต่อสู้และการควบคุม",
     questions: [
-      { id: "controls_rating", type: "star", label: "การควบคุมตอบสนองได้ดีแค่ไหน? (เดิน, กระโดด, Dash)", required: true },
-      { id: "combat_feel_rating", type: "star", label: "ความรู้สึกตอนโจมตีโดนศัตรู (ความหนักแน่น, เอฟเฟกต์, กล้องสั่น)", required: true },
+      { id: "controls_rating", type: "star", label: "ระบบการเคลื่อนที่ตอบสนองดีมากเพียงใด", required: true },
+      { id: "combat_feel_rating", type: "star", label: "ระบบ FEEDBACK หลังการโจมตีถูกศัตรูตอบสนองดีมากเพียงใด", required: true },
       // ระบบที่ผู้เล่นใช้จริง = ระบบที่ควรพัฒนาต่อ, ระบบที่ไม่มีคนใช้ = ต้องสอนให้ชัดขึ้นหรือตัดออก
-      { id: "mechanics_used", type: "select", label: "ระบบไหนที่คุณใช้บ่อยที่สุด?", options: ["โจมตีปกติ (คอมโบ)", "Parry (คลิกขวา)", "Perfect Dodge (Dash ตอนโดนตี)", "Charged Attack (กดค้าง)", "Plunge Attack (S + คลิกซ้ายกลางอากาศ)", "Skill (E)", "Ultimate (Q)"], required: true },
+      { id: "mechanics_used", type: "select", label: "ระบบการโจมตีไหนที่คุณใช้บ่อยที่สุด", options: ["โจมตีปกติ", "Parry", "Perfect Dodge (Dash ตอนโดนตี)", "Charged Attack (กดค้าง)", "Plunge Attack (S + คลิกซ้ายกลางอากาศ)", "Skill (E)", "Ultimate (Q)"], required: true },
       { id: "mechanics_unused", type: "select", label: "ระบบไหนที่คุณไม่รู้ว่ามี หรือไม่ได้ใช้เลย?", options: ["ใช้ครบทุกระบบ", "Parry", "Perfect Dodge", "Charged Attack / Counter", "Plunge Attack", "Upgrade (กด TAB ค้าง)", "Dash 2 ครั้ง"], required: false },
       // ถ้าคนแยกสีไม่ออก ต้องเปลี่ยนสัญญาณเตือน
       { id: "glint_clarity", type: "radio", label: "คุณแยกออกไหมว่า ประกายสีทอง = Parry ได้ และ ประกายสีแดง = ต้องหลบ?", options: ["แยกออกชัดเจน", "แยกออกบ้าง", "ไม่ทันสังเกต / ไม่เข้าใจ"], required: true },
